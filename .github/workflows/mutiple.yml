@@ -1,0 +1,25 @@
+name: Workflow with multiple triggers  # The name of the workflow
+
+on:
+  [push, workflow_dispatch]  # This workflow triggers on two events: 
+  # - "push" (whenever code is pushed to the repository)
+  # - "workflow_dispatch" (manual trigger from GitHub Actions UI)
+
+jobs:
+  say_something_else:  # Defines the "say_something_else" job
+    needs: say_something  # This job depends on "say_something" and will only run after it successfully completes
+    runs-on: ubuntu-latest  # Runs on the latest Ubuntu environment
+
+    steps:
+    - name: Something else
+      run: echo "Must run after say_something"  # Prints a message confirming the job order
+
+  say_something:  # Defines the "say_something" job
+    runs-on: ubuntu-latest  # Runs on the latest Ubuntu environment
+
+    steps:
+      - name: Step 1
+        run: echo "This is the first step"  # Prints "This is the first step" in the workflow logs
+
+      - name: Step 2
+        run: echo "This is the second step"  # Prints "This is the second step" in the workflo
